@@ -94,6 +94,9 @@
       var isTime = $(elem).get(0).tagName.toLowerCase() == "time"; // $(elem).is("time");
       var iso8601 = isTime ? $(elem).attr("datetime") : $(elem).attr("title");
       return $t.parse(iso8601);
+    },
+    callback: function() {
+      // placeholder for user-defined callback function
     }
   });
 
@@ -103,7 +106,10 @@
 
     var $s = $t.settings;
     if ($s.refreshMillis > 0) {
-      setInterval(function() { self.each(refresh); }, $s.refreshMillis);
+      setInterval(function() { 
+        self.each(refresh);
+        $t.callback();
+      }, $s.refreshMillis);
     }
     return self;
   };
