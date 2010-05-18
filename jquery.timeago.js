@@ -95,8 +95,11 @@
       var iso8601 = isTime ? $(elem).attr("datetime") : $(elem).attr("title");
       return $t.parse(iso8601);
     },
-    callback: function() {
-      // placeholder for user-defined callback function
+    before_callback: function() {
+      // placeholder for user-defined callback function that fires before timeago
+    },
+    after_callback: function() {
+      // placeholder for user-defined callback function that fires before timeago
     }
   });
 
@@ -107,8 +110,9 @@
     var $s = $t.settings;
     if ($s.refreshMillis > 0) {
       setInterval(function() { 
+        $t.before_callback();
         self.each(refresh);
-        $t.callback();
+        $t.after_callback();
       }, $s.refreshMillis);
     }
     return self;
