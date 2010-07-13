@@ -19,6 +19,7 @@
     else if (typeof timestamp == "string") return inWords($.timeago.parse(timestamp));
     else return inWords($.timeago.datetime(timestamp));
   };
+  var time_difference = 0;
   var $t = $.timeago;
 
   $.extend($.timeago, {
@@ -101,6 +102,16 @@
     },
     after_callback: function() {
       // placeholder for user-defined callback function that fires before timeago
+    },
+    now: function() {
+      var now = $('#now');
+      if (now.size() == 1) {
+        var now_date = $.timeago.parse(now.attr('data-timeago'));
+        now.remove();
+        time_difference = new Date().getTime() - now_date.getTime();
+      }
+
+      return new Date().getTime() - time_difference;
     }
   });
 
@@ -142,7 +153,7 @@
   }
 
   function distance(date) {
-    return (new Date().getTime() - date.getTime());
+    return ($t.now() - date.getTime());
   }
 
   // fix for IE6 suckage
