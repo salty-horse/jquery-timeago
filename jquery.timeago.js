@@ -1,5 +1,5 @@
 /*
- * timeago: a jQuery plugin, version: 0.9.pre (2010-02-28)
+ * timeago: a jQuery plugin, version: 0.9 (2010-06-21)
  * @requires jQuery v1.2.3 or later
  *
  * Timeago is a jQuery plugin that makes it easy to support automatically
@@ -84,6 +84,7 @@
     },
     parse: function(iso8601) {
       var s = $.trim(iso8601);
+      s = s.replace(/\.\d\d\d/,""); // remove milliseconds
       s = s.replace(/-/,"/").replace(/-/,"/");
       s = s.replace(/T/," ").replace(/Z/," UTC");
       s = s.replace(/([\+-]\d\d)\:?(\d\d)/," $1$2"); // -04:00 -> -0400
