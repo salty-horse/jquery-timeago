@@ -45,6 +45,7 @@
         numbers: []
       }
     },
+    intervalName: null,
     inWords: function(distanceMillis) {
       var $l = this.settings.strings;
       var prefix = $l.prefixAgo;
@@ -121,11 +122,7 @@
 
     var $s = $t.settings;
     if ($s.refreshMillis > 0) {
-      setInterval(function() { 
-        $t.before_callback();
-        self.each(refresh);
-        $t.after_callback();
-      }, $s.refreshMillis);
+      $t.intervalName = setInterval(function(){ $t.before_callback(); self.each(refresh); $t.after_callback(); }, $s.refreshMillis);
     }
     return self;
   };
