@@ -44,6 +44,7 @@
         numbers: []
       }
     },
+    intervalIDs: [],
     inWords: function(distanceMillis) {
       var $l = this.settings.strings;
       var prefix = $l.prefixAgo;
@@ -95,6 +96,10 @@
       var isTime = $(elem).get(0).tagName.toLowerCase() == "time"; // $(elem).is("time");
       var iso8601 = isTime ? $(elem).attr("datetime") : $(elem).attr("title");
       return $t.parse(iso8601);
+    },
+    stopAllRefreshes: function() {
+      $.each($t.intervalIDs, function(i, v) { clearInterval(v); });
+      $t.intervalIDs = [];
     }
   });
 
@@ -104,7 +109,7 @@
 
     var $s = $t.settings;
     if ($s.refreshMillis > 0) {
-      setInterval(function() { self.each(refresh); }, $s.refreshMillis);
+      $t.intervalIDs.push(setInterval(function() { self.each(refresh); }, $s.refreshMillis));
     }
     return self;
   };
