@@ -45,7 +45,7 @@
         numbers: []
       }
     },
-    intervalName: null,
+    intervalIDs: [],
     inWords: function(distanceMillis) {
       var $l = this.settings.strings;
       var prefix = $l.prefixAgo;
@@ -113,6 +113,10 @@
       }
 
       return new Date().getTime() - time_difference;
+    },
+    stopAllRefreshes: function() {
+      $.each($t.intervalIDs, function(i, v) { clearInterval(v); });
+      $t.intervalIDs = [];
     }
   });
 
@@ -122,7 +126,7 @@
 
     var $s = $t.settings;
     if ($s.refreshMillis > 0) {
-      $t.intervalName = setInterval(function(){ $t.before_callback(); self.each(refresh); $t.after_callback(); }, $s.refreshMillis);
+      $t.intervalIDs.push(setInterval(function(){ $t.before_callback(); self.each(refresh); $t.after_callback(); }, $s.refreshMillis));
     }
     return self;
   };
